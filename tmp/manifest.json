@@ -1,0 +1,24 @@
+{
+    "name": "PWA (rrw)",
+    "short_name": "pwarrw",
+    "lang": "en-US",
+    "start_url": "mainhw.html",
+    "display": "standalone",
+    "background_color": "#2196F3",
+    "theme_color": "#2196F3",
+    "description": "pwa (rrw)",  
+    "gcm_sender_id": "rrw",
+    "icons": [
+      {
+        "src": "pwa-512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      },
+      {
+        "src": "pwa-192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ]
+  }
+  

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="theme-color": content=rgb(223,219,219)>
+  <style>
+    body {
+      background-color: rgb(223, 219, 219);
+    }
+  </style>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  
+  <h2>WebAssembly?</h2>
+  
+  Maybe simple interest calulator? &nbsp; &nbsp;
+  <input id="startTest" name="startTest" size="15" type="text" /> &nbsp;&nbsp;
+  <input id="cbRun" name="run" type="submit" value="Run" /><br>
+
+  <span id="container"></span>
+  <script src="./main.js"></script>
+  <script src="./mainhw.js"></script>
+  <script>
+
+  //handle the run button
+  document.getElementById("cbRun").addEventListener("click", myFunction);
+
+  function myFunction() {
+    doFib = Module.cwrap('fib', 'number', ['number']);
+    var val = doFib(12);
+  }
+  </script>
+</body>
+</html>
