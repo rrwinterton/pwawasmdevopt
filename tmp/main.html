@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
-  <meta name="theme-color": content=rgb(223,219,219)>
+  <meta name="theme-color" : content=rgb(223,219,219)>
   <style>
     body {
       background-color: rgb(223, 219, 219);
@@ -10,26 +11,71 @@
   </style>
   <link rel="manifest" href="manifest.json">
 </head>
+
 <body>
-  
-  <h2>WebAssembly?</h2>
-  
-  Maybe simple interest calulator? &nbsp; &nbsp;
-  <input id="startTest" name="startTest" size="15" type="text" /> &nbsp;&nbsp;
-  <input id="cbRun" name="run" type="submit" value="Run" /><br>
+
+  <h2>Simple Interest Calculator</h2>
+  <form id=interestForm name="interestForm">
+    <b>Principal</b><br>
+    <input id="principal" name="principal" type="float" /><br><br>
+    <b>Interest Rate</b><br>
+    <input id="interest rate" name="rate" type="float" /><br><br>
+    <b>Term</b><br>
+    <input id="term" name="term" type="int" /><br><br>
+  </form>
+  <button onclick="doSubmit()">Click me</button>
 
   <span id="container"></span>
   <script src="./main.js"></script>
   <script src="./mainhw.js"></script>
   <script>
 
-  //handle the run button
-  document.getElementById("cbRun").addEventListener("click", myFunction);
-
-  function myFunction() {
+    //handle the run button
+    var form = document.getElementById("interestForm");
+    var doCalculation;
+    form.addEventListener("click", doSimpleInterest);
     doFib = Module.cwrap('fib', 'number', ['number']);
-    var val = doFib(12);
-  }
+    doCalcSimpleInterest = Module.cwrap('calcSimpleInterest', 'number', ['number'], ['number'], ['number']);
+    //form.addEventListener("submit", doSubmit);
+
+    function doSubmit() {
+      doCalculation = true;
+      var val = doFib(11);         
+  
+//      var interest = doCalcSimpleInterest(1.2, 2.1, 3);
+    }
+
+    function doSimpleInterest() {
+
+      const principalVal = form.elements['principal'];
+      const rateVal = form.elements['rate'];
+      const termVal = form.elements['term'];
+      let entryStr = "Please fill in:";
+      let dataEntryStr = entryStr;
+      let principalValue = principalVal.value;
+      if (principalValue == '') {
+        dataEntryStr += " Principal";
+        doCalculation = false;
+      }
+      let rateValue = rateVal.value;
+      if (rateValue == '') {
+        dataEntryStr += " rate";
+        doCalculation = false;
+      }
+      let termValue = termVal.value;
+      if (termValue == '') {
+        dataEntryStr += " term";
+        doCalculation = false;
+      }
+      if (doCalculation == true) {
+        if (dataEntryStr.length == entryStr.length) {
+          alert(dataEntryStr);
+        }
+        doCalculation = false;
+  //      var val = doFib(11);         
+      }
+    }
   </script>
 </body>
+
 </html>

@@ -4,7 +4,6 @@ var nByte = 4
 
 //initialize
 function Initialize() {
-    alert("hw");
     //check for browser supports service worker (sw) and register sw
     if ('serviceWorker' in navigator) {
         //is browser supports sw register sw

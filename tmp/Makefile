@@ -2,7 +2,7 @@ PROJECT_NAME = main
 EXECUTABLE_NAME = main
 
 CXX = emcc
-CXXFLAGS = -s FETCH=1 -s WASM=2 -O3 -s -msimd128 -s ASSERTIONS=1 -s EXPORTED_FUNCTIONS='["_fib", "_main"]' -s EXPORTED_RUNTIME_METHODS='["ccall","cwrap"]'
+CXXFLAGS = -s FETCH=1 -s WASM=2 -O3 -s -msimd128 -s ASSERTIONS=1 -s EXPORTED_FUNCTIONS='["_calcSimpleInterest", "_fib", "_main"]' -s EXPORTED_RUNTIME_METHODS='["ccall","cwrap","cwrap"]'
 
 D8 = d8
 D8FLAGS = --no-wasm-async-compilation
