@@ -16,14 +16,17 @@
 
   <h2>Simple Interest Calculator</h2>
   <form id=interestForm name="interestForm">
-    <b>Principal</b><br>
+    <b>Principal $</b><br>
     <input id="principal" name="principal" type="float" /><br><br>
-    <b>Interest Rate</b><br>
+    <b>Interest Rate $</b><br>
     <input id="interest rate" name="rate" type="float" /><br><br>
-    <b>Term</b><br>
-    <input id="term" name="term" type="int" /><br><br>
+    <b>Term </b><br>
+    <input id="term" name="term" type="int" /><br><br><br>
   </form>
-  <button onclick="doSubmit()">Click me</button>
+  <button onclick="doSubmit()">Calculate Interest</button>
+  <div id="panel"><br>
+    <div id="field_name"></div>
+  </div>
 
   <span id="container"></span>
   <script src="./main.js"></script>
@@ -32,18 +35,13 @@
 
     //handle the run button
     var form = document.getElementById("interestForm");
+    var dataEntryStr;
     var doCalculation;
+    var principalNum;
+    var rateNum;
+    var termNum;
     form.addEventListener("click", doSimpleInterest);
-    doFib = Module.cwrap('fib', 'number', ['number']);
     doCalcSimpleInterest = Module.cwrap('calcSimpleInterest', 'number', ['number'], ['number'], ['number']);
-    //form.addEventListener("submit", doSubmit);
-
-    function doSubmit() {
-      doCalculation = true;
-      var val = doFib(11);         
-  
-//      var interest = doCalcSimpleInterest(1.2, 2.1, 3);
-    }
 
     function doSimpleInterest() {
 
@@ -51,30 +49,50 @@
       const rateVal = form.elements['rate'];
       const termVal = form.elements['term'];
       let entryStr = "Please fill in:";
-      let dataEntryStr = entryStr;
+      dataEntryStr = entryStr;
       let principalValue = principalVal.value;
+
       if (principalValue == '') {
         dataEntryStr += " Principal";
         doCalculation = false;
+      }
+      else {
+        principalNum = parseFloat(principalValue);
       }
       let rateValue = rateVal.value;
       if (rateValue == '') {
         dataEntryStr += " rate";
         doCalculation = false;
       }
+      else {
+        rateNum = parseFloat(rateValue);
+      }
       let termValue = termVal.value;
       if (termValue == '') {
         dataEntryStr += " term";
         doCalculation = false;
       }
-      if (doCalculation == true) {
-        if (dataEntryStr.length == entryStr.length) {
-          alert(dataEntryStr);
-        }
-        doCalculation = false;
-  //      var val = doFib(11);         
+      else {
+        termNum = parseInt(principalValue);
       }
     }
+
+    function doSubmit() {
+      doCalculation = true;
+      doSimpleInterest();
+      let interest = doCalcSimpleInterest(principalNum, rateNum, termNum);
+      let fieldNameElement = document.getElementById('field_name');
+      if (doCalculation == true) {
+        interest = doCalcSimpleInterest(principalNum, rateNum, termNum);
+        interest = Math.round((interest + Number.EPSILON) * 100) / 100;
+        fieldNameElement = document.getElementById('field_name');
+        fieldNameElement.innerHTML = '<b>Interest </b>' + interest;
+      }
+      else {
+        fieldNameElement.innerHTML = dataEntryStr;
+      }
+    }
+
   </script>
 </body>
 

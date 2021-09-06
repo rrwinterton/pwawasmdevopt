@@ -1,6 +1,6 @@
 {
-    "name": "PWA (rrw)",
-    "short_name": "pwarrw",
+    "name": "PWA WebAssembly Develop Optimize",
+    "short_name": "pwawasmdevopt",
     "lang": "en-US",
     "start_url": "mainhw.html",
     "display": "standalone",
