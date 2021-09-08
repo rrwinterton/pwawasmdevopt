@@ -1,20 +1,21 @@
-/*
-*/
+//simple service worker
 
+//precache version information
 const PRECACHE = 'precache-v1';
+//runtime version information
 const RUNTIME = 'runtime-v1';
 
 //resources
 const PRECACHE_URLS = [
-  '/main.html',
-  '/maininit.css',
-  "/main.js",
-  '/sw.js',
-  '/mainwasm.js',
-  '/pwa-192.png',
-  '/pwa-512.png'
+  "/pwawasmdevopt/maininit.js",
+  "/pwawasmdevopt/main.js",
+  "/pwawasmdevopt/main.html",
+  "/pwawasmdevopt/main.wasm",
+  "/pwawasmdevopt/pwa-192.png",
+  "/pwawasmdevopt/pwa-512.png",
 ];
 
+//add pwa install handler and precache urls
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(PRECACHE)
@@ -23,6 +24,7 @@ self.addEventListener('install', event => {
   );
 });
 
+//runtime active handler
 self.addEventListener('activate', event => {
   const currentCaches = [PRECACHE, RUNTIME];
   event.waitUntil(
@@ -36,6 +38,7 @@ self.addEventListener('activate', event => {
   );
 });
 
+//fetch handler
 self.addEventListener('fetch', event => {
   if (event.request.url.startsWith(self.location.origin)) {
     event.respondWith(
@@ -43,7 +46,6 @@ self.addEventListener('fetch', event => {
         if (cachedResponse) {
           return cachedResponse;
         }
-
         return caches.open(RUNTIME).then(cache => {
           return fetch(event.request).then(response => {
             return cache.put(event.request, response.clone()).then(() => {
@@ -53,39 +55,5 @@ self.addEventListener('fetch', event => {
         });
       })
     );
-  }
-});
-
-self.addEventListener('push', function(e) {
-  var options = {
-//    body: 'This notification was generated from a push!',
-    icon: 'images/example.png',
-    vibrate: [100, 50, 100],
-    data: {
-      dateOfArrival: Date.now(),
-      primaryKey: '2'
-    },
-    actions: [
-      {action: 'explore', title: 'pwa (rrw 1)',
-        icon: 'images/checkmark.png'},
-      {action: 'close', title: 'Close',
-        icon: 'images/xmark.png'},
-    ]
-  };
-  e.waitUntil(
-    self.registration.showNotification('PWA (rrw) Heads up!', options)
-  );
-});
-
-self.addEventListener('notificationclick', function(e) {
-  var notification = e.notification;
-  var primaryKey = notification.data.primaryKey;
-  var action = e.action;
-
-  if (action === 'close') {
-    notification.close();
-  } else {
-    clients.openWindow('http://www.intel.com');
-    notification.close();
   }
 });

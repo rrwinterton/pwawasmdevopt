@@ -14,7 +14,8 @@
 
 <body>
 
-  <h2>Simple Interest Calculator</h2>
+  <!-- user input data for simple interest calculator -->
+  <h2>Simple Interest Calculator Demo</h2>
   <form id=interestForm name="interestForm">
     <b>Principal $</b><br>
     <input id="principal" name="principal" type="float" /><br><br>
@@ -24,14 +25,18 @@
     <input id="term" name="term" type="int" /><br><br><br>
   </form>
   <button onclick="doSubmit()">Calculate Interest</button>
+  
+  <!--this is the area where user feedback or interest is displayed-->
   <div id="panel"><br>
     <div id="field_name"></div>
   </div>
 
+  <!-- output results for simple interest calculator -->
   <span id="container"></span>
   <script src="./main.js"></script>
   <script src="./maininit.js"></script>
-  <script>
+
+<script>
 
     //handle the run button
     var form = document.getElementById("interestForm");
@@ -43,15 +48,17 @@
     form.addEventListener("click", doSimpleInterest);
     doCalcSimpleInterest = Module.cwrap('calcSimpleInterest', 'number', ['number'], ['number'], ['number']);
 
+    //check to make sure something is typed in.  doesn't validate input
     function doSimpleInterest() {
-
+      
       const principalVal = form.elements['principal'];
       const rateVal = form.elements['rate'];
       const termVal = form.elements['term'];
       let entryStr = "Please fill in:";
       dataEntryStr = entryStr;
+      
+      //check principal has a user enterred value (doesn't validate input)
       let principalValue = principalVal.value;
-
       if (principalValue == '') {
         dataEntryStr += " Principal";
         doCalculation = false;
@@ -59,6 +66,8 @@
       else {
         principalNum = parseFloat(principalValue);
       }
+
+      //check rate has a user enterred value (doesn't validate input)
       let rateValue = rateVal.value;
       if (rateValue == '') {
         dataEntryStr += " rate";
@@ -67,30 +76,45 @@
       else {
         rateNum = parseFloat(rateValue);
       }
+
+      //check term has a user enterred value (doesn't validate input)
       let termValue = termVal.value;
       if (termValue == '') {
         dataEntryStr += " term";
         doCalculation = false;
       }
       else {
-        termNum = parseInt(principalValue);
+        termNum = parseInt(termValue);
       }
     }
 
     function doSubmit() {
+      
+      //check for input values
       doCalculation = true;
       doSimpleInterest();
-      let interest = doCalcSimpleInterest(principalNum, rateNum, termNum);
+
+      //call the webassembly function calcSimpleInterest
+//      let interest = doCalcSimpleInterest(principalNum, rateNum, termNum);
+
+      //update and output results
       let fieldNameElement = document.getElementById('field_name');
       if (doCalculation == true) {
-        interest = doCalcSimpleInterest(principalNum, rateNum, termNum);
+      //call the webassembly function calcSimpleInterest
+      let interest = doCalcSimpleInterest(principalNum, rateNum, termNum);
+
+        //round results from interest to 1/100th
         interest = Math.round((interest + Number.EPSILON) * 100) / 100;
+
+        //update interest results in field_name
         fieldNameElement = document.getElementById('field_name');
         fieldNameElement.innerHTML = '<b>Interest </b>' + interest;
       }
+      //didn't provide all of the input values needed inform user in field_name
       else {
         fieldNameElement.innerHTML = dataEntryStr;
       }
+
     }
 
   </script>

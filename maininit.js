@@ -3,7 +3,7 @@ function Initialize() {
     //check for browser supports service worker (sw) and register sw
     if ('serviceWorker' in navigator) {
         //is browser supports sw register sw
-        navigator.serviceWorker.register('/sw.js', {
+        navigator.serviceWorker.register('/pwawasmdevopt/sw.js', {
             scope: './'
         }).then(function (registration) {
             var serviceWorker;
@@ -14,6 +14,8 @@ function Initialize() {
             } else if (registration.active) {
                 serviceWorker = registration.active;
             }
+            //future update of push notifications
+/*            
             if (serviceWorker) {
                 if ('PushManager' in window) {
                     console.log('Push is supported');
@@ -24,10 +26,12 @@ function Initialize() {
                 serviceWorker.addEventListener('statechange', function (e) {
                 });
             }
+*/            
         }).catch(function (error) {
-        });
-    }
+        });       
+    }    
 }
 
+//initialization and install service worker (sw)
 Initialize();
 
