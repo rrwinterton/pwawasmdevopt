@@ -6,6 +6,13 @@ const RUNTIME = 'runtime-v1';
 
 //resources
 const PRECACHE_URLS = [
+  '/main.html',
+  '/maininit.css',
+  "/main.js",
+  '/sw.js',
+  '/mainwasm.js',
+  '/pwa-192.png',
+  '/pwa-512.png'
 ];
 
 self.addEventListener('install', event => {

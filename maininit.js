@@ -1,7 +1,3 @@
-//global
-var inArray = new Int32Array([22, 44, 66, 999])
-var nByte = 4
-
 //initialize
 function Initialize() {
     //check for browser supports service worker (sw) and register sw
