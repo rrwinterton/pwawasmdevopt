@@ -12,6 +12,7 @@ extern "C"
 {
     WASM_EXPORT float calcSimpleInterest(float principal, float interestRate, int term)
     {
+        __builtin_wasm_trace_instruction(17);
         float interestPaid = principal * interestRate * term;
 //        printf("interestPaid %f\n", interestPaid);
         return interestPaid;
